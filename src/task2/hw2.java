@@ -1,6 +1,7 @@
 package task2;
 
 public class hw2 {
+	
 	public static void main(String args[]) {
 		System.out.println("Hw#2 Start! ");
 		String GRAPH_FILE = "/home/usaywook/FileRead/height.txt"; 
@@ -10,7 +11,7 @@ public class hw2 {
 		System.out.println("==================================================================================================================================================================");
 		System.out.println("								adj_mat[][]										");
 		System.out.println("==================================================================================================================================================================");		
-		graph.showAdjMat();
+		graph.showheightMat();
 		System.out.println();
 		System.out.println("==================================================================================================================================================================");
 		System.out.println("								adj_list[]										");
@@ -18,4 +19,5 @@ public class hw2 {
 		graph.showAdjList();
 		
 	}
+	
 }

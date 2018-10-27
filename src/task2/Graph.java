@@ -3,13 +3,17 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Vector;
+import java.util.HashMap;
+import java.util.Iterator;
+
+import javafx.util.Pair;
 
 public class Graph {
 	// Member variable
+	private int num_grid = 0;
 	private int num_vertices = 0;
-	private Vector<Vertex> adj_list;
-	private double [][]adj_mat = null;
+	private HashMap<Pair<Integer,Integer>, ArrayList<Vertex>> adj_list; // HashMap< vertex id, G.adjacent[vertex] >
+	private double [][]hight_mat = null;
 	
 	// Constructor
 	public Graph(String FILE_PATH) {
@@ -19,45 +23,52 @@ public class Graph {
 	
 	// Method
 	public void MakeAdjList() {
-		adj_list = new Vector<Vertex>();
-		adj_list.setSize(num_vertices);
-		for (int i=0; i<num_vertices; i++) {
-			adj_list.setElementAt(null, i);
-			for (int j = 0; j<num_vertices; j++) {
-				if (adj_mat[i][j] != -1) {
-					Vertex new_vertex = new Vertex(i,j); // Vertex.id = (i,j)
-					new_vertex.setheight(adj_mat[i][j]);
-					new_vertex.next = null;
-					insertVertex(i, new_vertex);
+		adj_list = new HashMap<Pair<Integer,Integer>, ArrayList<Vertex>>(); 
+		
+		for(int x1=0; x1< num_grid; x1++) {
+			for(int y1=0; y1< num_grid; y1++) {
+				if(hight_mat[x1][y1] != -1.0) {
+					Vertex src = new Vertex(x1,y1);
+					src.setheight(hight_mat[x1][y1]);
+					ArrayList<Vertex> temp = new ArrayList<Vertex>();
+					adj_list.put(src.getId(), temp);
+					for(int x2=0; x2< num_grid; x2++) {
+						for(int y2=0; y2<num_grid; y2++) {
+							if(hight_mat[x2][y2] != -1.0) {
+								Vertex new_vertex = new Vertex(x2,y2);
+								new_vertex.setheight(hight_mat[x2][y2]);
+								if(!((x1==x2)&&(y1==y2))) {
+									adj_list.get(src.getId()).add(new_vertex);
+									//System.out.println(adj_list.get(src.getId()));
+								}
+							}
+						}
+					}
 				}
 			}
 		}
-		
-	}	
-	public void insertVertex(int src_vertex, Vertex new_vertex) {
-		if (adj_list.get(src_vertex) == null) {
-			adj_list.setElementAt(new_vertex, src_vertex);
-		}
-		else {
-			Vertex curr = adj_list.get(src_vertex);
-			while(curr.next != null) curr = curr.next; // If curr.next == null, break 
-			curr.next = new_vertex;
-		}
-		
 	}
-	
-	public void showAdjList() {
-		for(int i=0; i<num_vertices; i++) {
-			Vertex curr = adj_list.get(i);
-			curr.printId();
-			System.out.print("'s adj_list : ");
-			while(curr != null) {
-				curr.printId();
-				System.out.print(": "+curr.getheight()+ " \u2192 ");
-				curr = curr.next;
+
+	void showAdjList() {
+		int k = 0;
+		for(int x1=0; x1< num_grid; x1++) {
+			for(int y1=0; y1< num_grid; y1++) {
+				if (adj_list.get(new Pair<Integer, Integer>(x1,y1)) != null){
+					System.out.println("Source vertex ("+x1+","+y1+") : ");
+					System.out.print("Adjacent List : ");
+					ArrayList<Vertex> temp = adj_list.get(new Pair<Integer, Integer>(x1,y1));
+					Iterator<Vertex> it = temp.iterator();
+					while(it.hasNext()) {
+						System.out.print("\u2192");
+						it.next().printId();
+					}
+					System.out.println();
+					k++;
+				}
 			}
-			System.out.println();
 		}
+		System.out.println("num_vertices: "+k);
+		num_vertices = k;
 	}
 	
 	public void MakeheightMat(String FILE_PATH) {
@@ -72,9 +83,9 @@ public class Graph {
 			in_file = new BufferedReader(fr); 
 			if(new File(FILE_PATH).exists()) {
 				String temp = (new BufferedReader(new FileReader(new File(FILE_PATH)))).readLine();
-				num_vertices = temp.split("\t").length;	
+				num_grid = temp.split("\t").length;	
 			}
-			adj_mat = new double[num_vertices][num_vertices];
+			hight_mat = new double[num_grid][num_grid];
 			if (f.exists()) {
 				int i = 0;
 				for (String str = in_file.readLine(); str != null; str = in_file.readLine()) {
@@ -82,8 +93,8 @@ public class Graph {
 					String []vector = str.split("\t");
 					//System.out.println("Debug : "+ vector.length); // in file, there must be no addition space
 					for (int j=0; j<vector.length; j++) {
-						adj_mat[i][j] = Double.parseDouble(vector[j]);
-						//System.out.println(i +","+j +" : " + adj_mat[i][j]);
+						hight_mat[i][j] = Double.parseDouble(vector[j]);
+						//System.out.println(i +","+j +" : " + hight_mat[i][j]);
 						}
 					i++;
 					}
@@ -102,13 +113,13 @@ public class Graph {
 			}
 	}
 	
-	public void showAdjMat() {
-		for (int i=0; i<num_vertices; i++ ) {
-			for (int j=0; j<num_vertices; j++ ) {
-				System.out.print(adj_mat[i][j] + "\t");
+	public void showheightMat() {
+		for (int i=0; i<num_grid; i++ ) {
+			for (int j=0; j<num_grid; j++ ) {
+				System.out.print(hight_mat[i][j] + "\t");
 			}
 			System.out.println();
 		}
 	}
-	
+
 }
