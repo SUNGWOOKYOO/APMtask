@@ -4,7 +4,9 @@ import javafx.util.Pair;
 public class Vertex {
 	private Pair<Integer, Integer> id;
 	private double height;
-	public Vertex prev;
+	public Vertex pi;
+	public double d;
+	
 	public Vertex(int _x, int _y) {
 		id = new Pair<Integer, Integer>(_x,_y);
 	}

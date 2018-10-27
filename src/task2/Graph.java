@@ -5,42 +5,53 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-
 import javafx.util.Pair;
 
 public class Graph {
 	// Member variable
 	private int num_grid = 0;
 	private int num_vertices = 0;
-	private HashMap<Pair<Integer,Integer>, ArrayList<Vertex>> adj_list; // HashMap< vertex id, G.adjacent[vertex] >
+	public HashMap<Pair<Integer,Integer>, ArrayList<Vertex>> adj_list; // HashMap< vertex id, G.adjacent[vertex] >
+	public HashMap<Pair<Integer,Integer>, Vertex> v = new HashMap<Pair<Integer,Integer>, Vertex>() ;
+	public HashMap<Pair<Pair<Integer,Integer>,Pair<Integer,Integer>>, Double> w 
+				= new HashMap<Pair<Pair<Integer,Integer>,Pair<Integer,Integer>>, Double>() ;
+	
 	private double [][]height_mat = null;
-	private double [][]weight_mat = null;
 	
 	// Constructor
 	public Graph(String FILE_PATH) {
-		MakeheightMat(FILE_PATH);
+		MakeHeightMat(FILE_PATH);
 		MakeAdjList();
-		MakeWeightMat();
+		setDistInfo();
 	}
-	// Method
+	// Method	
 	public void MakeAdjList() {
 		adj_list = new HashMap<Pair<Integer,Integer>, ArrayList<Vertex>>(); 
 		
 		for(int x1=0; x1< num_grid; x1++) {
 			for(int y1=0; y1< num_grid; y1++) {
 				if(height_mat[x1][y1] != -1.0) {
-					Vertex src = new Vertex(x1,y1);
-					src.setheight(height_mat[x1][y1]);
+					Pair<Integer, Integer> px1y1 = new Pair<Integer, Integer>(x1, y1);
+					//System.out.println("Debug");
+					//System.out.println(v);
+					if(!v.containsKey(px1y1)) {
+						Vertex a = new Vertex(x1,y1);
+						a.setheight(height_mat[x1][y1]);
+						v.put(px1y1, a);
+					}
 					ArrayList<Vertex> temp = new ArrayList<Vertex>();
-					adj_list.put(src.getId(), temp);
+					adj_list.put(px1y1, temp);
 					for(int x2=0; x2< num_grid; x2++) {
 						for(int y2=0; y2<num_grid; y2++) {
 							if(height_mat[x2][y2] != -1.0) {
-								Vertex new_vertex = new Vertex(x2,y2);
-								new_vertex.setheight(height_mat[x2][y2]);
 								if(( !((x1==x2)&&(y1==y2)) ) && ( Math.abs(x1-x2) + Math.abs(y1-y2) <= 2 ) ) {
-									adj_list.get(src.getId()).add(new_vertex);
-									//System.out.println(adj_list.get(src.getId()));
+									Pair<Integer, Integer> px2y2 = new Pair<Integer, Integer>(x2, y2);
+									if(!v.containsKey(px2y2)) {
+										Vertex new_vertex = new Vertex(x2,y2);
+										new_vertex.setheight(height_mat[x2][y2]);
+										v.put(px2y2, new_vertex);
+									}
+									adj_list.get(px1y1).add(v.get(px2y2));
 								}
 							}
 						}
@@ -48,9 +59,9 @@ public class Graph {
 				}
 			}
 		}
+		num_vertices = adj_list.keySet().size();
 	}
 	void showAdjList() {
-		int k = 0;
 		for(int x1=0; x1< num_grid; x1++) {
 			for(int y1=0; y1< num_grid; y1++) {
 				if (adj_list.get(new Pair<Integer, Integer>(x1,y1)) != null){
@@ -63,14 +74,12 @@ public class Graph {
 						it.next().printId();
 					}
 					System.out.println();
-					k++;
 				}
 			}
 		}
-		System.out.println("num_vertices: "+k);
-		num_vertices = k;
+		System.out.println("num_vertices: " + num_vertices);
 	}
-	public void MakeheightMat(String FILE_PATH) {
+	public void MakeHeightMat(String FILE_PATH) {
 		File f = null;
 		FileReader fr = null;
 		BufferedReader in_file = null;
@@ -111,7 +120,7 @@ public class Graph {
 				}
 			}
 	}
-	public void showheightMat() {
+	public void showHeightMat() {
 		for (int i=0; i<num_grid; i++ ) {
 			for (int j=0; j<num_grid; j++ ) {
 				System.out.print(height_mat[i][j] + "\t");
@@ -119,32 +128,47 @@ public class Graph {
 			System.out.println();
 		}
 	}
-	public void MakeWeightMat() {
-		weight_mat = new double [num_grid*num_grid][num_grid*num_grid];
-		for (int i=0;i<num_grid*num_grid; i++) {
-			for(int j=0; j<num_grid*num_grid; j++) {
-				weight_mat[i][j] = -1;
-			}
-		}
-		
-		System.out.println(adj_list.keySet());
+	public void setDistInfo() {
+		//System.out.println(adj_list.keySet());
 		Iterator<Pair<Integer, Integer>> iti = adj_list.keySet().iterator();
 		while(iti.hasNext()) {
-			Pair <Integer, Integer> p = iti.next();
+			Pair <Integer, Integer> p = iti.next(); 
 			int x1 = p.getKey();
 			int y1 = p.getValue();
 			double h1 = height_mat[p.getKey()][p.getValue()];
-			System.out.println(x1+","+y1+ "and "+h1 +" ~ ");
+			//System.out.println( "from (" + x1+","+y1+ ", height1: "+h1 +" ) " );
 			Iterator<Vertex> itj = adj_list.get(p).iterator();
 			while(itj.hasNext()) {
-				Vertex v = itj.next();
-				int x2 = v.getId().getKey();
-				int y2 = v.getId().getValue();
-				double h2 = v.getheight();
-				System.out.println(x2+","+y2+ "and "+h2);
+				// G.adj[v] : adjacent list for a vertex   
+				Vertex avert = itj.next();
+				int x2 = avert.getId().getKey();
+				int y2 = avert.getId().getValue();
+				double h2 = avert.getheight();
+				//System.out.print( "to (" + x2+","+y2+ " height2: "+h2 + ")" );
+				
+				double distance = Math.sqrt( (Math.pow((h1 - h2), 2) + Math.pow((Math.abs(x1 -x2) + Math.abs(y1 -y2)), 2) ) );
+				//System.out.println("  \u2192  Distance: "+ distance );
+				Pair<Pair<Integer, Integer>,Pair<Integer, Integer>> id_pair 
+						= new Pair < Pair<Integer, Integer>, Pair< Integer, Integer > >(p,avert.getId());
+				w.put(id_pair, distance);
 			}
-			System.out.println("-----------------------------");
+			//System.out.println("-----------------------------");
 		}
 	}
-
+	public double distance(Vertex a, Vertex b) {
+		Pair<Pair<Integer, Integer>,Pair<Integer, Integer>> id_pair 
+		= new Pair < Pair<Integer, Integer>, Pair< Integer, Integer > >(a.getId(),b.getId());
+		return w.get(id_pair); 
+	}
+	
+	public void showDandPI() {
+		Iterator<Pair<Integer, Integer>> it = v.keySet().iterator();
+		while(it.hasNext()) {
+			Pair<Integer, Integer> nid = it.next();
+			v.get(nid).printId();
+			System.out.println("'s d : "+ v.get(nid).d);
+			System.out.println("'s pi : "+ v.get(nid).pi);
+		}
+	}
+	
 }
