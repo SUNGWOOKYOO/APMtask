@@ -6,18 +6,19 @@ import java.io.FileReader;
 
 public class test
 {
+	/*
 	public static void main(String[] args)
 	{
-		// ¹ÙÀÌÆ® ´ÜÀ§·Î ÆÄÀÏÀÐ±â
-		String filePath = "D:\\FileRead\\HwData\\APM\\hw2_data\\height.txt"; // ´ë»ó ÆÄÀÏ
+		// ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
+		String filePath = "/home/usaywook/FileRead/height.txt"; // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		
-		File file = null; // ÆÄÀÏ ½ºÆ®¸²
+		File file = null; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½
 		FileReader in_file = null;
 		BufferedReader fileStream = null;
 		
 		try
 		{
-			file = new File(filePath);// ÆÄÀÏ ½ºÆ®¸² »ý¼º
+			file = new File(filePath);// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			in_file = new FileReader(file);
 			fileStream = new BufferedReader(in_file); 
 			double [][]values = null;
@@ -43,18 +44,19 @@ public class test
 		}
 		catch (Exception e)
 		{
-			System.out.println("ÆÄÀÏ ÀÔÃâ·Â ¿¡·¯!!" + e);
+			System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!!" + e);
 		}
 		finally
 		{
 			try
 			{
-				fileStream.close();// ÆÄÀÏ ´Ý±â. ¿©±â¿¡µµ try/catch°¡ ÇÊ¿äÇÏ´Ù.
+				fileStream.close();// ï¿½ï¿½ï¿½ï¿½ ï¿½Ý±ï¿½. ï¿½ï¿½ï¿½â¿¡ï¿½ï¿½ try/catchï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Ï´ï¿½.
 			}
 			catch (Exception e)
 			{
-				System.out.println("´Ý±â ½ÇÆÐ" + e);
+				System.out.println("ï¿½Ý±ï¿½ ï¿½ï¿½ï¿½ï¿½" + e);
 			}
 		}
 	}
+	*/
 }
