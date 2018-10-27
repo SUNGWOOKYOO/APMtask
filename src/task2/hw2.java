@@ -6,19 +6,19 @@ public class hw2 {
 	
 	public static void main(String args[]) {
 		System.out.println("Hw#2 Start! ");
-		String GRAPH_FILE = "/home/usaywook/FileRead/testheight.txt"; 
+		String GRAPH_FILE = "/home/usaywook/FileRead/height.txt"; 
 		Graph graph = new Graph(GRAPH_FILE);
 	
 		// Problem 4.A
 		System.out.println("==================================================================================================================================================================");
 		System.out.println("								adj_mat[][]										");
 		System.out.println("==================================================================================================================================================================");		
-		graph.showHeightMat();
+		//graph.showHeightMat();
 		System.out.println();
 		System.out.println("==================================================================================================================================================================");
 		System.out.println("								adj_list										");
 		System.out.println("==================================================================================================================================================================");
-		graph.showAdjList();
+		//graph.showAdjList();
 		System.out.println();
 		
 		System.out.println("==================================================================================================================================================================");
@@ -28,7 +28,7 @@ public class hw2 {
 		
 		Dijk.Dijkstra_run(graph, graph.v.get(new Pair<Integer, Integer>(0,0)) );
 		
-		System.out.println(" result: ");
+		//System.out.println(" result: ");
 		Dijk.showPath(graph, graph.v.get(new Pair<Integer, Integer>(0,0)) );
 		
 	}
