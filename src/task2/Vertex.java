@@ -22,5 +22,9 @@ public class Vertex {
 	public  Pair<Integer, Integer> getId(){
 		return id;
 	}
+	public String toString() {
+		StringBuilder s = new StringBuilder("("+id.getKey()+","+id.getValue()+") ");
+		return s.toString();
+	}
 	
 }
