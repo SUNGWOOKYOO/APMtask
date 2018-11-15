@@ -7,12 +7,12 @@ public class hw2 {
 	public static void main(String args[]) {
 		System.out.println("Hw#2 Start! ");
 		//String GRAPH_FILE = "/home/usaywook/FileRead/height.txt";
-		String GRAPH_FILE = "D:\\FileRead\\HwData\\APM\\hw2_data\\height.txt"; 
+		String GRAPH_FILE = "D:\\FileRead\\HwData\\APM\\hw2_data\\testheight.txt"; 
 		Graph graph = new Graph(GRAPH_FILE);
 	
 		// Problem 4.A
 		System.out.println("==================================================================================================================================================================");
-		System.out.println("								adj_mat[][]										");
+		System.out.println("								height_mat[][]										");
 		System.out.println("==================================================================================================================================================================");		
 		graph.showHeightMat();
 		System.out.println();
@@ -36,8 +36,8 @@ public class hw2 {
 		System.out.println("==================================================================================================================================================================");
 		Graph graph2 = new Graph(GRAPH_FILE);
 		Prim PrimAlgo = new Prim();
-		PrimAlgo.Prim_run(graph2, graph.v.get(new Pair<Integer, Integer>(19,19)) );
-		PrimAlgo.showWeightandWrite(graph2, graph.v.get(new Pair<Integer, Integer>(19,19)));
+		PrimAlgo.Prim_run(graph2, graph.v.get(new Pair<Integer, Integer>(2,2)) );
+		PrimAlgo.showWeightandWrite(graph2, graph.v.get(new Pair<Integer, Integer>(2,2)));
 	}
 	
 }

@@ -61,7 +61,7 @@ public class Graph {
 		}
 		num_vertices = adj_list.keySet().size();
 	}
-	void showAdjList() {
+	public void showAdjList() {
 		for(int x1=0; x1< num_grid; x1++) {
 			for(int y1=0; y1< num_grid; y1++) {
 				if (adj_list.get(new Pair<Integer, Integer>(x1,y1)) != null){
@@ -147,6 +147,7 @@ public class Graph {
 				//System.out.print( "to (" + x2+","+y2+ " height2: "+h2 + ")" );
 				
 				double distance = Math.sqrt( (Math.pow((h1 - h2), 2) + Math.pow((Math.abs(x1 -x2) + Math.abs(y1 -y2)), 2) ) );
+				//double distance = Math.abs(h1 - h2);
 				//System.out.println("  \u2192  Distance: "+ distance );
 				Pair<Pair<Integer, Integer>,Pair<Integer, Integer>> id_pair 
 						= new Pair < Pair<Integer, Integer>, Pair< Integer, Integer > >(p,avert.getId());

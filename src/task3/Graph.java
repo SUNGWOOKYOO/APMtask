@@ -9,8 +9,8 @@ import javafx.util.Pair;
 
 public class Graph {
 	// Member variable
-	private int num_grid = 0;
-	private int num_vertices = 0;
+	public int num_grid = 0;
+	public int num_vertices = 0;
 	public HashMap<Pair<Integer,Integer>, ArrayList<Vertex>> adj_list; // HashMap< vertex id, G.adjacent[vertex] >
 	public HashMap<Pair<Integer,Integer>, Vertex> v = new HashMap<Pair<Integer,Integer>, Vertex>() ;
 	public HashMap<Pair<Pair<Integer,Integer>,Pair<Integer,Integer>>, Double> w 
@@ -19,6 +19,7 @@ public class Graph {
 	private double [][]height_mat = null;
 	
 	// Constructor
+	public Graph() {} // default Constructor
 	public Graph(String FILE_PATH) {
 		MakeHeightMat(FILE_PATH);
 		MakeAdjList();
@@ -147,6 +148,7 @@ public class Graph {
 				//System.out.print( "to (" + x2+","+y2+ " height2: "+h2 + ")" );
 				
 				double distance = Math.sqrt( (Math.pow((h1 - h2), 2) + Math.pow((Math.abs(x1 -x2) + Math.abs(y1 -y2)), 2) ) );
+				//double distance = Math.abs(h1 - h2);
 				//System.out.println("  \u2192  Distance: "+ distance );
 				Pair<Pair<Integer, Integer>,Pair<Integer, Integer>> id_pair 
 						= new Pair < Pair<Integer, Integer>, Pair< Integer, Integer > >(p,avert.getId());
@@ -155,12 +157,39 @@ public class Graph {
 			//System.out.println("-----------------------------");
 		}
 	}
-	public double distance(Vertex a, Vertex b) {
+	public double weight(Vertex a, Vertex b) {
 		Pair<Pair<Integer, Integer>,Pair<Integer, Integer>> id_pair 
 		= new Pair < Pair<Integer, Integer>, Pair< Integer, Integer > >(a.getId(),b.getId());
 		return w.get(id_pair); 
 	}
-	
+	public void setweight(Vertex a, Vertex b, double _weight) {
+		Pair<Pair<Integer, Integer>,Pair<Integer, Integer>> id_pair 
+		= new Pair < Pair<Integer, Integer>, Pair< Integer, Integer > >(a.getId(),b.getId());
+		w.put(id_pair, _weight);
+	}
+	public Pair<Pair<Integer, Integer>,Pair<Integer, Integer>> VertexPair(Vertex a, Vertex b){
+		Pair<Pair<Integer, Integer>,Pair<Integer, Integer>> id_pair 
+		= new Pair < Pair<Integer, Integer>, Pair< Integer, Integer > >(a.getId(),b.getId());
+		return id_pair;
+	}
+	public void showWeight() {
+		Iterator<Pair<Integer, Integer>> iti = adj_list.keySet().iterator();
+		while(iti.hasNext()) {
+			Pair <Integer, Integer> uid = iti.next(); 
+			Iterator<Vertex> itj = adj_list.get(uid).iterator();
+			while(itj.hasNext()) {
+				Vertex vv = itj.next();
+				Vertex uu = v.get(uid);
+				if(w.containsKey(VertexPair(uu, vv))){
+					System.out.print(" edge  (");
+					uu.printId(); System.out.print(","); vv.printId(); 
+					System.out.print(")"); System.out.print(" weight: ");
+					//System.out.println(" "+ w.get(VertexPair(uu, vv)));
+					System.out.println(weight(uu,vv));
+				}
+			}
+		}
+	}
 	public void showDandPI() {
 		Iterator<Pair<Integer, Integer>> it = v.keySet().iterator();
 		while(it.hasNext()) {
