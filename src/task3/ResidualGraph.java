@@ -94,7 +94,9 @@ public class ResidualGraph extends Graph{
 					uu.printId(); System.out.print(","); vv.printId(); 
 					System.out.print(")"); System.out.print(" flow/weight: ");
 					//System.out.println(" "+ w.get(VertexPair(uu, vv)));
-					System.out.print(weight(uu,vv)- getResidualCapacity(uu,vv) + "/"); System.out.println(weight(uu,vv)); 
+					double tempflow = weight(uu,vv)- getResidualCapacity(uu,vv);
+					if (tempflow < 0) tempflow = 0.0;
+					System.out.print(tempflow + "/"); System.out.println(weight(uu,vv)); 
 				}
 			}
 		}	
@@ -122,6 +124,7 @@ public class ResidualGraph extends Graph{
 						InfoLine.append(uuname.toString()); InfoLine.append(","); InfoLine.append(vvname.toString()); 
 						InfoLine.append(") Flow: ");
 						Double Cfvalue = (weight(uu,vv)- getResidualCapacity(uu,vv));
+						if (Cfvalue<0 ) Cfvalue = 0.0;
 						InfoLine.append(formatter.format(Cfvalue));
 						fw.write(InfoLine.toString());
 						fw.write("\r\n");

@@ -7,8 +7,8 @@ import java.util.Iterator;
 
 import javafx.util.Pair;
 
-public class Tool{
-	public boolean BFS(ResidualGraph G, Vertex s, Vertex t) {
+public class TestTool {
+	public boolean BFS(TestResidualGraph G, Vertex s, Vertex t) {
 		Iterator<Vertex> GVit = G.v.values().iterator();
 		while(GVit.hasNext()) {
 			Vertex GV = GVit.next();
@@ -35,7 +35,7 @@ public class Tool{
 		}
 		return G.v.get(t.getId()).visited;
 	}
-	public ArrayList<Vertex> ShortestPathList(ResidualGraph G, Vertex s, Vertex t){
+	public ArrayList<Vertex> ShortestPathList(TestResidualGraph G, Vertex s, Vertex t){
 		ArrayList<Vertex> Pathset = new ArrayList<>();
 		if(BFS(G, G.v.get(s.getId()), G.v.get(t.getId()))) {
 			
@@ -52,7 +52,7 @@ public class Tool{
 	}
 	
 	// test for TestResidualGraph
-	public double EdmondsKarp(ResidualGraph G, Vertex source, Vertex sink) {
+	public double EdmondsKarp(TestResidualGraph G, Vertex source, Vertex sink) {
 		double max_flow = 0;
 		
 		int iteration_BFS = 0;
@@ -94,17 +94,10 @@ public class Tool{
 				}
 				vv = vv.pi;
 			}
-			//G.showResidualCapacity();
 			iteration_BFS++; 
 		}
-		
-		G.WriteWeightTofile(max_flow);
+		//G.WriteWeightTofile(max_flow);
 		System.out.print("Final Max flow value: ");
 		return max_flow;
 	}
 }
-
-
-
-
-
