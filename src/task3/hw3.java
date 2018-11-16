@@ -12,13 +12,14 @@ public class hw3 {
 		Pair<Integer, Integer> sid;
 		Pair<Integer, Integer> tid;
 		if(false) {
-			//GRAPH_FILE = "/home/usaywook/FileRead/height.txt";
-			GRAPH_FILE = "D:\\FileRead\\HwData\\APM\\hw3_data\\height.txt";
+			GRAPH_FILE = "/home/swyoo/FileRead/APM/hw3_data/height.txt";
+			//GRAPH_FILE = "D:\\FileRead\\HwData\\APM\\hw3_data\\height.txt";
 			sid = new Pair<Integer, Integer>(0,0);
 			tid = new Pair<Integer, Integer>(19,19);
 		}
 		else {
-			GRAPH_FILE = "D:\\FileRead\\HwData\\APM\\hw3_data\\testheight.txt"; 
+			GRAPH_FILE = "/home/swyoo/FileRead/APM/hw3_data/testheight.txt";
+			//GRAPH_FILE = "D:\\FileRead\\HwData\\APM\\hw3_data\\testheight.txt"; 
 			sid = new Pair<Integer, Integer>(0,0);
 			tid = new Pair<Integer, Integer>(2,2);
 		} 
@@ -37,10 +38,10 @@ public class hw3 {
 		// Problem 4.A 
 		Tool tool = new Tool();
 		System.out.print("Result: ");
-		System.out.println(tool.BFS(graph, graph.v.get(sid), graph.v.get(tid)));
-		System.out.println(tool.ShortestPathList(graph, graph.v.get(sid), graph.v.get(tid)));
+		//System.out.println(tool.BFS(graph, graph.v.get(sid), graph.v.get(tid)));
+		//System.out.println(tool.ShortestPathList(graph, graph.v.get(sid), graph.v.get(tid)));
 		
-		graph.showWeight();
+		//graph.showWeight();
 		
 		
 	}

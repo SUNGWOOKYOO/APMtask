@@ -5,51 +5,37 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
+import javafx.util.Pair;
+
 public class Tool {
-	public boolean BFS(Graph G, Vertex s, Vertex t) {
-		
-		// Mark all vertices into "visted"
+	public boolean BFS(TestResidualGraph G, Vertex s, Vertex t) {
 		Iterator<Vertex> GVit = G.v.values().iterator();
 		while(GVit.hasNext()) {
 			Vertex GV = GVit.next();
 			G.v.get(GV.getId()).visited = false;
-			//debug : print all vertices
-			//System.out.print(G.v.get(GV.getId()).toString()+" ");
-			//System.out.print(G.v.get(GV.getId()).getname()+" ");
-			//System.out.println(G.v.get(GV.getId()).visited);
 		}
-		
-		// Create a queue for BFS
 		ArrayDeque<Vertex> Q = new ArrayDeque<>(); 
 		Q.push(G.v.get(s.getId()));
 		G.v.get(s.getId()).visited = true;
-		// debug : check if queue is automatically updated when we change G.v
-		//System.out.println(G.v.get(s.getId()).visited);
-		//System.out.println(Q);
-		//System.out.println(Q.peek().visited);
 		
 		while(!Q.isEmpty()) {
-			Vertex u = Q.pop();
-			//System.out.println(Q);
-			
-			// Go over G.adj[u] List  
-			Iterator<Vertex> GadjOfu = G.adj_list.get(u.getId()).iterator();
+			Vertex uu = Q.pop();
+			Iterator<Vertex> GadjOfu = G.adj_list.get(uu.getId()).iterator();
 			while(GadjOfu.hasNext()) {
-				Vertex aVertex = GadjOfu.next();
-				if (G.v.get(aVertex.getId()).visited == false) {
-					Q.push(G.v.get(aVertex.getId()));
-					G.v.get(aVertex.getId()).visited = true;
+				Vertex vv = GadjOfu.next();
+				boolean ConditionOfResidualCapacity = (G.getResidualCapacity(uu, vv)) > 0;
+				if ((G.v.get(vv.getId()).visited == false )&&( ConditionOfResidualCapacity )) {
+					Q.push(G.v.get(vv.getId()));
+					G.v.get(vv.getId()).visited = true;
 					
 					// path info update 
-					G.v.get(aVertex.getId()).pi = u;
-					//G.v.get(u.getId()).next = G.v.get(aVertex.getId());
+					G.v.get(vv.getId()).pi = uu;
 				}
 			}
 		}
-		
 		return G.v.get(t.getId()).visited;
 	}
-	public ArrayList<Vertex> ShortestPathList(Graph G, Vertex s, Vertex t){
+	public ArrayList<Vertex> ShortestPathList(TestResidualGraph G, Vertex s, Vertex t){
 		ArrayList<Vertex> Pathset = new ArrayList<>();
 		if(BFS(G, G.v.get(s.getId()), G.v.get(t.getId()))) {
 			
@@ -64,4 +50,58 @@ public class Tool {
 		Collections.reverse(Pathset);
 		return Pathset;
 	}
+	
+	// test for TestResidualGraph
+	public double EdmondsKarp(TestResidualGraph G, Vertex source, Vertex sink) {
+		double max_flow = 0;
+		
+		int iteration_BFS = 0;
+		while(BFS(G,G.v.get(source.getId()),G.v.get(sink.getId()))) {
+			// Debug: See BFS path
+			System.out.println("============================================================================================================================================================");
+			System.out.println("							"+ iteration_BFS +" th iteration BFS Result in Edmonds Algorithm: 							");
+			System.out.println("============================================================================================================================================================");
+			System.out.print("ShortestPath from source to sink using BFS: ");
+			System.out.println(ShortestPathList(G, G.v.get(source.getId()), G.v.get(sink.getId())));
+			
+			// Find the Residual Capacity on the Shortest Path
+			double path_flow = Double.MAX_VALUE;
+			Vertex back1 = sink;
+			while( back1.name != source.name ) {
+				Pair<Pair<Integer,Integer>,Pair<Integer,Integer>> edgeOfUV 
+					= G.VertexPair(back1.pi, back1);
+				path_flow = Math.min(path_flow, (G.getResidualCapacity(back1.pi, back1)));
+				back1 = back1.pi;
+			}
+			max_flow += path_flow;
+			System.out.println("Residual Capacity on the shortest path: "+ path_flow);
+			
+			// update residual capacities and reverse edge
+			Vertex vv = sink;
+			while( vv.name != source.name) {
+				Vertex uu = vv.pi;
+				Pair<Pair<Integer, Integer>,Pair<Integer, Integer>> uvid_pair
+					= G.VertexPair(uu,vv);
+				Pair<Pair<Integer, Integer>,Pair<Integer, Integer>> vuid_pair
+					= G.VertexPair(vv,uu);
+			
+				G.setResidualCapacity(uu, vv, G.getResidualCapacity(uu, vv) - path_flow);
+				if(!G.residualCapacity.containsKey(vuid_pair)) {
+					G.adj_list.get(vv.getId()).add(G.v.get(uu.getId()));
+					G.setResidualCapacity(vv, uu, path_flow);
+				}else {
+					G.setResidualCapacity(vv, uu, G.getResidualCapacity(vv, uu) + path_flow);
+				}
+				vv = vv.pi;
+			}
+			iteration_BFS++; 
+		}
+		System.out.print("Final Max flow value: ");
+		return max_flow;
+	}
 }
+
+
+
+
+

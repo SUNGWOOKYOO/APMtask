@@ -63,22 +63,19 @@ public class Graph {
 		num_vertices = adj_list.keySet().size();
 	}
 	public void showAdjList() {
-		for(int x1=0; x1< num_grid; x1++) {
-			for(int y1=0; y1< num_grid; y1++) {
-				if (adj_list.get(new Pair<Integer, Integer>(x1,y1)) != null){
-					System.out.println("Position of the vertex ("+x1+","+y1+") and  vertex name is " + v.get(new Pair<Integer, Integer>(x1,y1)).name + " : ");
-					System.out.print("Adjacent List : ");
-					ArrayList<Vertex> temp = adj_list.get(new Pair<Integer, Integer>(x1,y1));
-					Iterator<Vertex> it = temp.iterator();
-					while(it.hasNext()) {
-						System.out.print("\u2192");
-						it.next().printId();
-					}
-					System.out.println();
-				}
+		Iterator<Pair<Integer, Integer>> iti = adj_list.keySet().iterator();
+		while(iti.hasNext()){
+			Pair<Integer, Integer> id = iti.next();
+			Vertex i = v.get(id);
+			System.out.print("Vertex: "); i.printId();
+			Iterator<Vertex> itj = adj_list.get(id).iterator();
+			System.out.print("adj_list: ");
+			while(itj.hasNext()) {
+				Vertex j = itj.next();
+				j.printId(); 
 			}
+			System.out.println();
 		}
-		System.out.println("num_vertices: " + num_vertices);
 	}
 	public void MakeHeightMat(String FILE_PATH) {
 		File f = null;
@@ -158,14 +155,10 @@ public class Graph {
 		}
 	}
 	public double weight(Vertex a, Vertex b) {
-		Pair<Pair<Integer, Integer>,Pair<Integer, Integer>> id_pair 
-		= new Pair < Pair<Integer, Integer>, Pair< Integer, Integer > >(a.getId(),b.getId());
-		return w.get(id_pair); 
+		return w.get(VertexPair(a,b)); 
 	}
 	public void setweight(Vertex a, Vertex b, double _weight) {
-		Pair<Pair<Integer, Integer>,Pair<Integer, Integer>> id_pair 
-		= new Pair < Pair<Integer, Integer>, Pair< Integer, Integer > >(a.getId(),b.getId());
-		w.put(id_pair, _weight);
+		w.put(VertexPair(a,b), _weight);
 	}
 	public Pair<Pair<Integer, Integer>,Pair<Integer, Integer>> VertexPair(Vertex a, Vertex b){
 		Pair<Pair<Integer, Integer>,Pair<Integer, Integer>> id_pair 
