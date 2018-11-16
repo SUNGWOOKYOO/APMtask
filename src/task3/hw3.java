@@ -11,7 +11,7 @@ public class hw3 {
 		String GRAPH_FILE;
 		Pair<Integer, Integer> sid;
 		Pair<Integer, Integer> tid;
-		if(false) {
+		if(true) {
 			GRAPH_FILE = "/home/swyoo/FileRead/APM/hw3_data/height.txt";
 			//GRAPH_FILE = "D:\\FileRead\\HwData\\APM\\hw3_data\\height.txt";
 			sid = new Pair<Integer, Integer>(0,0);
@@ -23,7 +23,7 @@ public class hw3 {
 			sid = new Pair<Integer, Integer>(0,0);
 			tid = new Pair<Integer, Integer>(2,2);
 		} 
-		Graph graph = new Graph(GRAPH_FILE);
+		ResidualGraph graph = new ResidualGraph(GRAPH_FILE);
 		System.out.println("==================================================================================================================================================================");
 		System.out.println("								height_mat[][]										");
 		System.out.println("==================================================================================================================================================================");		
@@ -32,15 +32,13 @@ public class hw3 {
 		System.out.println("==================================================================================================================================================================");
 		System.out.println("								adj_list										");
 		System.out.println("==================================================================================================================================================================");
-		graph.showAdjList();
+		//graph.showAdjList();
 		System.out.println();
 		
 		// Problem 4.A 
 		Tool tool = new Tool();
-		System.out.print("Result: ");
-		//System.out.println(tool.BFS(graph, graph.v.get(sid), graph.v.get(tid)));
-		//System.out.println(tool.ShortestPathList(graph, graph.v.get(sid), graph.v.get(tid)));
-		
+		System.out.println("EdmondsKarp Result: ");
+		System.out.println(tool.EdmondsKarp(graph, graph.v.get(sid), graph.v.get(tid)));
 		//graph.showWeight();
 		
 		

@@ -1,6 +1,5 @@
 package task3;
 import javafx.util.Pair;
-import task2.Prim;
 
 public class TestMain {
 
@@ -26,7 +25,7 @@ public class TestMain {
 		Tool tool = new Tool();
 		System.out.println();
 		System.out.println("EdmondsKarp Result: ");
-		System.out.println(tool.EdmondsKarp(graph, graph.v.get(sid), graph.v.get(tid)));
+		//System.out.println(tool.EdmondsKarp(graph, graph.v.get(sid), graph.v.get(tid)));
 		graph.showWeight();
 	}
 
