@@ -58,7 +58,7 @@ if __name__ == "__main__":
     D, P = Dijkstra(V, s1)
 
     # print paths
-    filename1 = 'Output_b.txt'
+    filename1 = 'Output_b'
     print("Writing results to %s..." % filename1)
     write_paths_to_file(V, D, P, s1, filename1)
 
@@ -68,7 +68,7 @@ if __name__ == "__main__":
     T, T_sum = Prim(V, s2)
 
     # print tree
-    filename2 = 'Output_c.txt'
+    filename2 = 'Output_c'
     print("Writing results to %s..." % filename2)
     write_tree_to_file(V, T, T_sum, s2, filename2)
     
