@@ -34,11 +34,12 @@ public class hw3 {
 		//graph.showResidualCapacity();
 		System.out.println();
 		
-		// Problem 4.A 
+		// Problem 4.A  and Problem 4.B
 		Tool tool = new Tool();
 		System.out.println("EdmondsKarp Result: ");
 		System.out.println(tool.EdmondsKarp(graph, graph.v.get(sid), graph.v.get(tid)));
-		//graph.showWeight();
+		graph.showWeight();
+		//graph.showSaturatedEdge();
 	}
 
 }

@@ -131,26 +131,31 @@ public class Graph {
 		//System.out.println(adj_list.keySet());
 		Iterator<Pair<Integer, Integer>> iti = adj_list.keySet().iterator();
 		while(iti.hasNext()) {
-			Pair <Integer, Integer> p = iti.next(); 
-			int x1 = p.getKey();
-			int y1 = p.getValue();
-			double h1 = height_mat[p.getKey()][p.getValue()];
+			Pair <Integer, Integer> uid = iti.next(); 
+			int x1 = uid.getKey();
+			int y1 = uid.getValue();
+			double h1 = height_mat[uid.getKey()][uid.getValue()];
 			//System.out.println( "from (" + x1+","+y1+ ", height1: "+h1 +" ) " );
-			Iterator<Vertex> itj = adj_list.get(p).iterator();
+			Iterator<Vertex> itj = adj_list.get(uid).iterator();
 			while(itj.hasNext()) {
-				// G.adj[v] : adjacent list for a vertex   
-				Vertex avert = itj.next();
-				int x2 = avert.getId().getKey();
-				int y2 = avert.getId().getValue();
-				double h2 = avert.getheight();
+				// G.adj[u] : adjacent list for a vertex   
+				Vertex vv = itj.next();
+				int x2 = vv.getId().getKey();
+				int y2 = vv.getId().getValue();
+				double h2 = vv.getheight();
 				//System.out.print( "to (" + x2+","+y2+ " height2: "+h2 + ")" );
 				
 				double distance = Math.sqrt( (Math.pow((h1 - h2), 2) + Math.pow((Math.abs(x1 -x2) + Math.abs(y1 -y2)), 2) ) );
 				//double distance = Math.abs(h1 - h2);
 				//System.out.println("  \u2192  Distance: "+ distance );
-				Pair<Pair<Integer, Integer>,Pair<Integer, Integer>> id_pair 
-						= new Pair < Pair<Integer, Integer>, Pair< Integer, Integer > >(p,avert.getId());
-				w.put(id_pair, distance);
+				Pair<Pair<Integer, Integer>,Pair<Integer, Integer>> uvid_pair 
+						= new Pair < Pair<Integer, Integer>, Pair< Integer, Integer > >(uid,vv.getId());
+				Pair<Pair<Integer, Integer>,Pair<Integer, Integer>> vuid_pair 
+					= new Pair < Pair<Integer, Integer>, Pair< Integer, Integer > >(vv.getId(),uid);
+				w.put(uvid_pair, distance);
+				if(!adj_list.get(vv.getId()).contains(v.get(uid))) {
+					w.put(vuid_pair, Double.MAX_VALUE);
+				}
 			}
 			//System.out.println("-----------------------------");
 		}

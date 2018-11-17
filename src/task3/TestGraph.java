@@ -102,6 +102,7 @@ public class TestGraph extends Graph{
 		*/
 		
 		//test graph3
+		/*
 		Vertex A = new Vertex(1,0); v.put(A.getId(), A);
 		Vertex B = new Vertex(0,1); v.put(B.getId(), B); 
 		Vertex C = new Vertex(2,1); v.put(C.getId(), C);
@@ -136,6 +137,32 @@ public class TestGraph extends Graph{
 		
 		ArrayList<Vertex> f_adj = new ArrayList<>();  
 		adj_list.put(F.getId(), f_adj);	
+		*/
+		
+		//test graph4
+		
+		Vertex A = new Vertex(0,1); v.put(A.getId(), A);
+		Vertex B = new Vertex(1,0); v.put(B.getId(), B); 
+		Vertex C = new Vertex(1,2); v.put(C.getId(), C);
+		Vertex D = new Vertex(2,1); v.put(D.getId(), D);
+		
+		ArrayList<Vertex> a_adj = new ArrayList<>();
+		a_adj.add(B); w.put(VertexPair(A,B), 100.0); 
+		a_adj.add(C); w.put(VertexPair(A,C), 100.0); 
+		adj_list.put(A.getId(), a_adj);
+			
+		ArrayList<Vertex> b_adj = new ArrayList<>();
+		b_adj.add(C); w.put(VertexPair(B,C), 1.0);
+		b_adj.add(D); w.put(VertexPair(B,D), 100.0);
+		adj_list.put(B.getId(), b_adj);
+		
+		ArrayList<Vertex> c_adj = new ArrayList<>();
+		c_adj.add(D); w.put(VertexPair(C,D), 100.0);
+		adj_list.put(C.getId(), c_adj);
+			
+		ArrayList<Vertex> d_adj = new ArrayList<>();
+		adj_list.put(D.getId(), d_adj);
+		
 		}
 	}
 }
@@ -165,10 +192,15 @@ class TestResidualGraph extends TestGraph{
 				// flow(u,v) - f(u,v) = weight(u,v) // capacity(u,v)
 				Pair<Pair<Integer, Integer>,Pair<Integer, Integer>> uvid_pair
 					= new Pair < Pair<Integer, Integer>, Pair< Integer, Integer> >(uid,vid);
-				//Pair<Pair<Integer, Integer>,Pair<Integer, Integer>> vuid_pair
-				//	= new Pair < Pair<Integer, Integer>, Pair< Integer, Integer> >(vid,uid);
+				Pair<Pair<Integer, Integer>,Pair<Integer, Integer>> vuid_pair
+					= new Pair < Pair<Integer, Integer>, Pair< Integer, Integer> >(vid,uid);
 				flow.put(uvid_pair, 0.0);
 				residualCapacity.put(uvid_pair, weight(v.get(uid),vv));
+				
+				if(!adj_list.get(vid).contains(v.get(uid))) {
+					flow.put(vuid_pair, 0.0);
+					residualCapacity.put(vuid_pair, 0.0);
+				}
 			}
 		}
 	}
@@ -220,9 +252,29 @@ class TestResidualGraph extends TestGraph{
 					uu.printId(); System.out.print(","); vv.printId(); 
 					System.out.print(")"); System.out.print(" flow/weight: ");
 					//System.out.println(" "+ w.get(VertexPair(uu, vv)));
-					System.out.print(weight(uu,vv)- getResidualCapacity(uu,vv) + "/"); System.out.println(weight(uu,vv)); 
+					System.out.print(getflow(uu, vv) + "/"); System.out.println(weight(uu,vv)); 
 				}
 			}
 		}
+	}
+	
+	public void showSaturatedEdge() {
+		Iterator<Pair<Integer, Integer>> iti = adj_list.keySet().iterator();
+		while(iti.hasNext()) {
+			Pair <Integer, Integer> uid = iti.next(); 
+			Iterator<Vertex> itj = adj_list.get(uid).iterator();
+			while(itj.hasNext()) {
+				Vertex vv = itj.next();
+				Vertex uu = v.get(uid);
+				if(w.containsKey(VertexPair(uu, vv))){
+					if(getResidualCapacity(uu,vv) == 0.0) {
+						System.out.print(" edge  (");
+						uu.printId(); System.out.print(","); vv.printId(); 
+						System.out.print(")");
+					}
+				}
+			}
+		}
+		System.out.println();
 	}
 }

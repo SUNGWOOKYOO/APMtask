@@ -36,13 +36,17 @@ public class ResidualGraph extends Graph{
 				Vertex vv = itj.next();
 				Pair <Integer, Integer> vid = vv.getId(); 
 					
-				// flow(u,v) - f(u,v) = weight(u,v) // capacity(u,v)
 				Pair<Pair<Integer, Integer>,Pair<Integer, Integer>> uvid_pair
 					= new Pair < Pair<Integer, Integer>, Pair< Integer, Integer> >(uid,vid);
-				//Pair<Pair<Integer, Integer>,Pair<Integer, Integer>> vuid_pair
-				//	= new Pair < Pair<Integer, Integer>, Pair< Integer, Integer> >(vid,uid);
+				Pair<Pair<Integer, Integer>,Pair<Integer, Integer>> vuid_pair
+					= new Pair < Pair<Integer, Integer>, Pair< Integer, Integer> >(vid,uid);
 				flow.put(uvid_pair, 0.0);
 				residualCapacity.put(uvid_pair, weight(v.get(uid),vv));
+				
+				if(!adj_list.get(vid).contains(v.get(uid))) {
+					flow.put(vuid_pair, 0.0);
+					residualCapacity.put(vuid_pair, 0.0);
+				}
 			}
 		}
 	}
@@ -73,7 +77,6 @@ public class ResidualGraph extends Graph{
 					System.out.print(" edge  (");
 					uu.printId(); System.out.print(","); vv.printId(); 
 					System.out.print(")"); System.out.print(" residualCapacity: ");
-					//System.out.println(" "+ w.get(VertexPair(uu, vv)));
 					System.out.println(getResidualCapacity(uu,vv)); 
 				}
 			}
@@ -94,12 +97,10 @@ public class ResidualGraph extends Graph{
 					uu.printId(); System.out.print(","); vv.printId(); 
 					System.out.print(")"); System.out.print(" flow/weight: ");
 					//System.out.println(" "+ w.get(VertexPair(uu, vv)));
-					double tempflow = weight(uu,vv)- getResidualCapacity(uu,vv);
-					if (tempflow < 0) tempflow = 0.0;
-					System.out.print(tempflow + "/"); System.out.println(weight(uu,vv)); 
+					System.out.print(getflow(uu, vv) + "/"); System.out.println(weight(uu,vv)); 
 				}
 			}
-		}	
+		}
 	}
 		
 	public void WriteWeightTofile(double _Max_flow) {
@@ -123,8 +124,7 @@ public class ResidualGraph extends Graph{
 						InfoLine.append("("); 
 						InfoLine.append(uuname.toString()); InfoLine.append(","); InfoLine.append(vvname.toString()); 
 						InfoLine.append(") Flow: ");
-						Double Cfvalue = (weight(uu,vv)- getResidualCapacity(uu,vv));
-						if (Cfvalue<0 ) Cfvalue = 0.0;
+						Double Cfvalue = (getflow(uu,vv));
 						InfoLine.append(formatter.format(Cfvalue));
 						fw.write(InfoLine.toString());
 						fw.write("\r\n");
@@ -137,4 +137,56 @@ public class ResidualGraph extends Graph{
 		}
 	}
 	
+	public void showSaturatedEdge() {
+		Iterator<Pair<Integer, Integer>> iti = adj_list.keySet().iterator();
+		while(iti.hasNext()) {
+			Pair <Integer, Integer> uid = iti.next(); 
+			Iterator<Vertex> itj = adj_list.get(uid).iterator();
+			while(itj.hasNext()) {
+				Vertex vv = itj.next();
+				Vertex uu = v.get(uid);
+				if(w.containsKey(VertexPair(uu, vv))){
+					if(getResidualCapacity(uu,vv) == 0.0) {
+						System.out.print(" edge  (");
+						uu.printId(); System.out.print(","); vv.printId(); 
+						System.out.print(")");
+					}
+				}
+			}
+		}
+		System.out.println();
+	}
+	public void WriteSaturatedEgdeTofile(double _Max_flow) {
+		File file = new File("./StMinCutOutput.txt"); // output at current directory 
+		try {
+			FileWriter fw = new FileWriter(file);
+			fw.write("Flow value: "); 
+			DecimalFormat formatter = new DecimalFormat("#0.00");
+			Double THE_MAX_FLOW = _Max_flow; fw.write(formatter.format(THE_MAX_FLOW).toString()); fw.write("\r\n");
+			Iterator<Pair<Integer, Integer>> iti = adj_list.keySet().iterator();
+			while(iti.hasNext()) {
+				Pair <Integer, Integer> uid = iti.next(); 
+				Iterator<Vertex> itj = adj_list.get(uid).iterator();
+				while(itj.hasNext()) {
+					StringBuilder InfoLine = new StringBuilder();
+					Vertex vv = itj.next();
+					Vertex uu = v.get(uid);
+					if(w.containsKey(VertexPair(uu, vv))){
+						Integer uuname = uu.name;
+						Integer vvname = vv.name;
+						if(getResidualCapacity(uu,vv) == 0.0){
+							InfoLine.append("("); 
+							InfoLine.append(uuname.toString()); InfoLine.append(","); InfoLine.append(vvname.toString()); 
+							InfoLine.append("), ");
+							fw.write(InfoLine.toString());
+						}
+					}
+				}
+			}
+			fw.write("\r\n");
+			fw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -84,17 +84,20 @@ public class TestTool {
 					= G.VertexPair(uu,vv);
 				Pair<Pair<Integer, Integer>,Pair<Integer, Integer>> vuid_pair
 					= G.VertexPair(vv,uu);
-			
+
 				G.setResidualCapacity(uu, vv, G.getResidualCapacity(uu, vv) - path_flow);
-				if(!G.residualCapacity.containsKey(vuid_pair)) {
-					G.adj_list.get(vv.getId()).add(G.v.get(uu.getId()));
-					G.setResidualCapacity(vv, uu, path_flow);
+				G.setResidualCapacity(vv, uu, G.getResidualCapacity(vv, uu) + path_flow);
+				if((G.getflow(uu, vv) + path_flow) > G.weight(uu, vv)) {
+					G.setflow(uu, vv, G.getflow(uu, vv) + (path_flow - G.getflow(vv, uu)));
+					G.setflow(vv, uu, G.getflow(vv, uu) + (path_flow - G.getflow(uu, vv)));
 				}else {
-					G.setResidualCapacity(vv, uu, G.getResidualCapacity(vv, uu) + path_flow);
+					G.setflow(uu, vv, G.getflow(uu, vv) + path_flow );
+					G.setflow(vv, uu, G.getflow(vv, uu) + path_flow );
 				}
 				vv = vv.pi;
 			}
-			iteration_BFS++; 
+			iteration_BFS++;
+			G.showWeight();
 		}
 		//G.WriteWeightTofile(max_flow);
 		System.out.print("Final Max flow value: ");
