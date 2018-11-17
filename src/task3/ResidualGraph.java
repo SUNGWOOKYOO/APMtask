@@ -104,6 +104,7 @@ public class ResidualGraph extends Graph{
 	}
 		
 	public void WriteWeightTofile(double _Max_flow) {
+		System.out.println("Write EdmondsKarpOutput.txt ... ");
 		File file = new File("./EdmondsKarpOutput.txt"); // output at current directory 
 		try {
 			FileWriter fw = new FileWriter(file);
@@ -157,6 +158,7 @@ public class ResidualGraph extends Graph{
 		System.out.println();
 	}
 	public void WriteSaturatedEgdeTofile(double _Max_flow) {
+		System.out.println("Write StMinCutOutput.txt ... ");
 		File file = new File("./StMinCutOutput.txt"); // output at current directory 
 		try {
 			FileWriter fw = new FileWriter(file);

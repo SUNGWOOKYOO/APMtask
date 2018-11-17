@@ -9,6 +9,9 @@ public class Vertex extends Object {
 	public int name;
 	public boolean visited;
 	
+	public Vertex(int num) {
+		name = num;
+	}
 	public Vertex(int _x, int _y) {
 		id = new Pair<Integer, Integer>(_x,_y);
 		name = 20*id.getKey() + id.getValue();
@@ -21,6 +24,9 @@ public class Vertex extends Object {
 	}
 	public void printId() {
 		System.out.print("("+id.getKey()+","+id.getValue()+") ");
+	}
+	public void printName() {
+		System.out.print(name);
 	}
 	public Pair<Integer, Integer> getId(){
 		return id;

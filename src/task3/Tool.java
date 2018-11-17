@@ -59,11 +59,11 @@ public class Tool{
 		int iteration_BFS = 0;
 		while(BFS(G,G.v.get(source.getId()),G.v.get(sink.getId()))) {
 			// Debug: See BFS path
-			System.out.println("============================================================================================================================================================");
-			System.out.println("							"+ iteration_BFS +" th iteration BFS Result in Edmonds Algorithm: 							");
-			System.out.println("============================================================================================================================================================");
-			System.out.print("ShortestPath from source to sink using BFS: ");
-			System.out.println(ShortestPathList(G, G.v.get(source.getId()), G.v.get(sink.getId())));
+			//System.out.println("============================================================================================================================================================");
+			//System.out.println("							"+ iteration_BFS +" th iteration BFS Result in Edmonds Algorithm: 							");
+			//System.out.println("============================================================================================================================================================");
+			//System.out.print("ShortestPath from source to sink using BFS: ");
+			//System.out.println(ShortestPathList(G, G.v.get(source.getId()), G.v.get(sink.getId())));
 			
 			// Find the Residual Capacity on the Shortest Path
 			double path_flow = Double.MAX_VALUE;
@@ -75,7 +75,7 @@ public class Tool{
 				back1 = back1.pi;
 			}
 			max_flow += path_flow;
-			System.out.println("Residual Capacity on the shortest path: "+ path_flow);
+			//System.out.println("Residual Capacity on the shortest path: "+ path_flow);
 			
 			// update residual capacities and reverse edge
 			Vertex vv = sink;
@@ -101,7 +101,9 @@ public class Tool{
 			iteration_BFS++; 
 		}
 		
+		//Problem 4-A
 		G.WriteWeightTofile(max_flow);
+		//Problem 4-B
 		G.WriteSaturatedEgdeTofile(max_flow);
 		System.out.print("Final Max flow value: ");
 		return max_flow;
