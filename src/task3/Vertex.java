@@ -1,7 +1,7 @@
 package task3;
 import javafx.util.Pair;
 
-public class Vertex {
+public class Vertex extends Object {
 	private Pair<Integer, Integer> id;
 	private double height;
 	public Vertex pi;

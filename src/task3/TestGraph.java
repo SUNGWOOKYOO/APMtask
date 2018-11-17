@@ -102,7 +102,7 @@ public class TestGraph extends Graph{
 		*/
 		
 		//test graph3
-		/*
+		
 		Vertex A = new Vertex(1,0); v.put(A.getId(), A);
 		Vertex B = new Vertex(0,1); v.put(B.getId(), B); 
 		Vertex C = new Vertex(2,1); v.put(C.getId(), C);
@@ -137,10 +137,10 @@ public class TestGraph extends Graph{
 		
 		ArrayList<Vertex> f_adj = new ArrayList<>();  
 		adj_list.put(F.getId(), f_adj);	
-		*/
+		
 		
 		//test graph4
-		
+		/*
 		Vertex A = new Vertex(0,1); v.put(A.getId(), A);
 		Vertex B = new Vertex(1,0); v.put(B.getId(), B); 
 		Vertex C = new Vertex(1,2); v.put(C.getId(), C);
@@ -162,7 +162,7 @@ public class TestGraph extends Graph{
 			
 		ArrayList<Vertex> d_adj = new ArrayList<>();
 		adj_list.put(D.getId(), d_adj);
-		
+		*/
 		}
 	}
 }

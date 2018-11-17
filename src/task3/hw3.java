@@ -26,7 +26,7 @@ public class hw3 {
 		System.out.println("==================================================================================================================================================================");
 		System.out.println("								show weight/ flow										");
 		System.out.println("==================================================================================================================================================================");		
-		graph.showWeight();
+		//graph.showWeight();
 		System.out.println();
 		System.out.println("==================================================================================================================================================================");
 		System.out.println("								show residualCapacity										");
@@ -36,10 +36,14 @@ public class hw3 {
 		
 		// Problem 4.A  and Problem 4.B
 		Tool tool = new Tool();
-		System.out.println("EdmondsKarp Result: ");
-		System.out.println(tool.EdmondsKarp(graph, graph.v.get(sid), graph.v.get(tid)));
-		graph.showWeight();
+		//System.out.println("EdmondsKarp Result: ");
+		//System.out.println(tool.EdmondsKarp(graph, graph.v.get(sid), graph.v.get(tid)));
+		//graph.showWeight();
 		//graph.showSaturatedEdge();
+		
+		// Problem 4.C
+		System.out.println(tool.FordFurkerson_order1(graph, graph.v.get(sid), graph.v.get(tid)));
+		//System.out.println(tool.FordFurkerson_order2(graph, graph.v.get(sid), graph.v.get(tid)));
 	}
 
 }
