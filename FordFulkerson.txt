@@ -1,2 +1,2 @@
-1) Totoal: 20000.00/ Execution time: 1338 microsecond
-2) Totoal: 20000.00/ Execution time: 933 microsecond
+1) Totoal: 20000.00/ Execution time: 1412 microsecond
+2) Totoal: 20000.00/ Execution time: 816 microsecond

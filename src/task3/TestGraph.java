@@ -56,8 +56,8 @@ public class TestGraph extends Graph{
 		adj_list.put(G.getId(), g_adj);
 		}
 		else {
-		/*
 		//test graph2 
+		/*	
 		Vertex A = new Vertex(0,1); v.put(A.getId(), A);
 		Vertex B = new Vertex(1,0); v.put(B.getId(), B); 
 		Vertex C = new Vertex(2,0); v.put(C.getId(), C);
@@ -138,7 +138,7 @@ public class TestGraph extends Graph{
 		ArrayList<Vertex> f_adj = new ArrayList<>();  
 		adj_list.put(F.getId(), f_adj);	
 		
-		
+			
 		//test graph4
 		/*
 		Vertex A = new Vertex(0,1); v.put(A.getId(), A);
@@ -256,6 +256,26 @@ class TestResidualGraph extends TestGraph{
 				}
 			}
 		}
+	}
+	
+	public void showMincut() {
+		Iterator<Pair<Integer, Integer>> iti = adj_list.keySet().iterator();
+		while(iti.hasNext()) {
+			Pair <Integer, Integer> uid = iti.next(); 
+			Iterator<Vertex> itj = adj_list.get(uid).iterator();
+			while(itj.hasNext()) {
+				Vertex vv = itj.next();
+				Vertex uu = v.get(uid);
+				if(w.containsKey(VertexPair(uu, vv))){
+						if((uu.visited == true) && (vv.visited == false)) {
+							System.out.print("edge  (");
+							uu.printId(); System.out.print(","); vv.printId(); 
+							System.out.print(") ");
+						}
+				}
+			}
+		}
+		System.out.println();
 	}
 	
 	public void showSaturatedEdge() {

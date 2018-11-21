@@ -38,10 +38,11 @@ public class TestMain {
 		TestTool tool = new TestTool();
 		System.out.println();
 		//System.out.println("EdmondsKarp Result: ");
-		//System.out.println(tool.EdmondsKarp(graph, graph.v.get(sid), graph.v.get(tid)));
+		System.out.println(tool.EdmondsKarp(graph, graph.v.get(sid), graph.v.get(tid)));
 		//problem A
 		//graph.showWeight();
 		// problem B
+		graph.showMincut();
 		//graph.showSaturatedEdge(); 
 		
 		// problem C

@@ -162,7 +162,28 @@ public class ResidualGraph extends Graph{
 		}
 		System.out.println();
 	}
-	public void WriteSaturatedEgdeTofile(double _Max_flow) {
+	
+	public void showMincut() {
+		Iterator<Pair<Integer, Integer>> iti = adj_list.keySet().iterator();
+		while(iti.hasNext()) {
+			Pair <Integer, Integer> uid = iti.next(); 
+			Iterator<Vertex> itj = adj_list.get(uid).iterator();
+			while(itj.hasNext()) {
+				Vertex vv = itj.next();
+				Vertex uu = v.get(uid);
+				if(w.containsKey(VertexPair(uu, vv))){
+						if((uu.visited == true) && (vv.visited == false)) {
+							System.out.print(" edge  (");
+							uu.printId(); System.out.print(","); vv.printId(); 
+							System.out.print(")");
+						}
+				}
+			}
+		}
+		System.out.println();
+	}
+	
+	public void WriteStMinCutTofile(double _Max_flow) {
 		System.out.println("Write StMinCutOutput.txt ... ");
 		File file = new File("./StMinCutOutput.txt"); // output at current directory 
 		try {
@@ -181,10 +202,11 @@ public class ResidualGraph extends Graph{
 					if(w.containsKey(VertexPair(uu, vv))){
 						Integer uuname = uu.name;
 						Integer vvname = vv.name;
-						if(getResidualCapacity(uu,vv) == 0.0){
+						
+						if((uu.visited == true) && (vv.visited == false)) {
 							InfoLine.append("("); 
 							InfoLine.append(uuname.toString()); InfoLine.append(","); InfoLine.append(vvname.toString()); 
-							InfoLine.append("), ");
+							InfoLine.append(") ");
 							fw.write(InfoLine.toString());
 						}
 					}

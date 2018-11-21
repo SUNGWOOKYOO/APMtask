@@ -104,7 +104,7 @@ public class Tool{
 		//Problem 4-A
 		G.WriteWeightTofile(max_flow);
 		//Problem 4-B
-		G.WriteSaturatedEgdeTofile(max_flow);
+		G.WriteStMinCutTofile(max_flow);
 		System.out.print("Final Max flow value: ");
 		return max_flow;
 	}
