@@ -18,9 +18,10 @@ public class hw3 {
 		Pair<Integer, Integer> tid;
 		int snum, tnum;
 		if(true) {
-			//GRAPH_FILE = "/home/swyoo/FileRead/APM/hw3_data/height.txt";
-			GRAPH_FILE = "D:\\FileRead\\HwData\\APM\\hw3_data\\height.txt";
-			GRAPH_FILE2 = "D:\\FileRead\\HwData\\APM\\hw3_data\\integer.txt";
+			GRAPH_FILE = "/home/swyoo/FileRead/APM/hw3_data/height.txt";
+			GRAPH_FILE2 = "/home/swyoo/FileRead/APM/hw3_data/integer.txt";
+			//GRAPH_FILE = "D:\\FileRead\\HwData\\APM\\hw3_data\\height.txt";
+			//GRAPH_FILE2 = "D:\\FileRead\\HwData\\APM\\hw3_data\\integer.txt";			
 			sid = new Pair<Integer, Integer>(0,0);
 			tid = new Pair<Integer, Integer>(19,19);
 			snum = 0;
@@ -28,8 +29,9 @@ public class hw3 {
 		}
 		else {
 			//GRAPH_FILE = "/home/swyoo/FileRead/APM/hw3_data/testheight.txt";
-			GRAPH_FILE = "D:\\FileRead\\HwData\\APM\\hw3_data\\testheight.txt"; 
-			GRAPH_FILE2 = "D:\\FileRead\\HwData\\APM\\hw3_data\\testinteger.txt";
+			//GRAPH_FILE2 = "/home/swyoo/FileRead/APM/hw3_data/testinteger.txt";
+			//GRAPH_FILE = "D:\\FileRead\\HwData\\APM\\hw3_data\\testheight.txt"; 
+			//GRAPH_FILE2 = "D:\\FileRead\\HwData\\APM\\hw3_data\\testinteger.txt";
 			sid = new Pair<Integer, Integer>(0,0);
 			tid = new Pair<Integer, Integer>(2,2);
 			snum = 0;
@@ -53,6 +55,7 @@ public class hw3 {
 		System.out.println(tool.EdmondsKarp(graph, graph.v.get(sid), graph.v.get(tid)));
 		//graph.showWeight();
 		//graph.showSaturatedEdge();
+		//graph.showResidualCapacity();
 		
 		// Problem 4.C
 		ProblemC PROBLEMC = new ProblemC();
@@ -65,10 +68,10 @@ public class hw3 {
 		
 		ProblemCGraph graph3 = new ProblemCGraph(GRAPH_FILE2); 
 		long startTime2 = System.nanoTime();
-		double result2 = PROBLEMC.FordFurkerson_order1(graph3, graph3.vertice[snum], graph3.vertice[tnum]);
+		double result2 = PROBLEMC.FordFurkerson_order2(graph3, graph3.vertice[snum], graph3.vertice[tnum]);
 		long stopTime2 = System.nanoTime();
 		long elapsedTime2 = (stopTime2 - startTime2);
-		//graph2.showflowWeight();
+		System.out.println(result2);
 		
 		System.out.println("Write FordFulkerson.txt ... ");
 		File file = new File("./FordFulkerson.txt"); // output at current directory 
@@ -79,12 +82,12 @@ public class hw3 {
 			
 			fw.write("1) Totoal: "); 
 			fw.write(formatter.format(result1).toString()); fw.write("/");
-			fw.write("Execution time: "); fw.write(formatter2.format(elapsedTime1).toString()); fw.write("ns");
+			fw.write(" Execution time: "); fw.write(formatter2.format(elapsedTime1/1000).toString()); fw.write(" microsecond");
 			fw.write("\r\n");
 			
 			fw.write("2) Totoal: "); 
 			fw.write(formatter.format(result2).toString()); fw.write("/");
-			fw.write("Execution time: "); fw.write(formatter2.format(elapsedTime2).toString()); fw.write("ns");
+			fw.write(" Execution time: "); fw.write(formatter2.format(elapsedTime2/1000).toString()); fw.write(" microsecond");
 			fw.write("\r\n");
 			
 			fw.close();

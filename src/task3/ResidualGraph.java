@@ -125,8 +125,13 @@ public class ResidualGraph extends Graph{
 						InfoLine.append("("); 
 						InfoLine.append(uuname.toString()); InfoLine.append(","); InfoLine.append(vvname.toString()); 
 						InfoLine.append(") Flow: ");
+						//InfoLine.append(") Flow/weight/residualCapacity: ");
 						Double Cfvalue = (getflow(uu,vv));
-						InfoLine.append(formatter.format(Cfvalue));
+						//Double WEIGHT = (weight(uu,vv));
+						//Double RESIDUAL = (getResidualCapacity(uu,vv));
+						InfoLine.append(formatter.format(Cfvalue)); 
+						//InfoLine.append("/ "); InfoLine.append(formatter.format(WEIGHT));
+						//InfoLine.append("/ "); InfoLine.append(formatter.format(RESIDUAL));
 						fw.write(InfoLine.toString());
 						fw.write("\r\n");
 					}

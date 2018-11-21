@@ -39,13 +39,13 @@ public class TestMain {
 		System.out.println();
 		//System.out.println("EdmondsKarp Result: ");
 		//System.out.println(tool.EdmondsKarp(graph, graph.v.get(sid), graph.v.get(tid)));
-		// problem A
+		//problem A
 		//graph.showWeight();
 		// problem B
 		//graph.showSaturatedEdge(); 
 		
 		// problem C
-		System.out.println(tool.FordFurkerson_order1(graph, graph.v.get(sid), graph.v.get(tid)));
+		//System.out.println(tool.FordFurkerson_order1(graph, graph.v.get(sid), graph.v.get(tid)));
 		//System.out.println(tool.FordFurkerson_order2(graph, graph.v.get(sid), graph.v.get(tid)));
 		
 	}

@@ -274,7 +274,7 @@ class ProblemC{
 			//G.showWeight();
 		}
 		//G.WriteWeightTofile(max_flow);
-		System.out.print("Final Max flow value: ");
+		System.out.print("1) Final Max flow value: ");
 		return max_flow;
 	}
 	
@@ -318,7 +318,7 @@ class ProblemC{
 			}
 			iteration_BFS++;
 		}
-		System.out.print("Final Max flow value: ");
+		System.out.print("2) Final Max flow value: ");
 		return max_flow;
 	}
 }
