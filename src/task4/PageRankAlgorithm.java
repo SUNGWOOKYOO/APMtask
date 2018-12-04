@@ -4,8 +4,8 @@ public class PageRankAlgorithm {
 	public void Initialize_PageRankVector(PageRankGraph G) {
 		G.PageRank = new double[G.MAXNODENUM];
 		for (int i = 0; i < G.MAXNODENUM; ++i) {
-			G.PageRank[i] = 1.0 / G.NODENUM;
-			// G.PageRank[i] = 1.0;
+			//G.PageRank[i] = 1.0 / G.NODENUM;
+			G.PageRank[i] = 1.0;
 			if (G.NonExistNodeID.contains(i)) {
 				G.PageRank[i] = 0.0;
 			}

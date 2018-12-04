@@ -26,7 +26,7 @@ public class Tuple implements Comparable<Tuple> {
 		StringBuilder InfoLine = new StringBuilder();
 		InfoLine.append(NodeID);
 		InfoLine.append("/");
-		DecimalFormat formatter = new DecimalFormat("#0.000000");
+		DecimalFormat formatter = new DecimalFormat("#0.000");
 		InfoLine.append(formatter.format(PageRank).toString());
 		return InfoLine.toString();
 	}

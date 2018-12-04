@@ -197,7 +197,7 @@ public class PageRankGraph {
 
 	public void showPageRank() {
 		System.out.println("Show PageRank Vector [...]: ");
-		DecimalFormat formatter = new DecimalFormat("#0.000000");
+		DecimalFormat formatter = new DecimalFormat("#0.000");
 		for (int i = 0; i < MAXNODENUM; ++i) {
 			System.out.print(formatter.format(PageRank[i]).toString() + " ");
 		}
@@ -206,7 +206,7 @@ public class PageRankGraph {
 
 	public void showPageRankTop10() {
 		System.out.println("Show top10 Rank: ID/PageRank [...]: ");
-		DecimalFormat formatter = new DecimalFormat("#0.000000");
+		DecimalFormat formatter = new DecimalFormat("#0.000");
 		List<Tuple> TotalList = new ArrayList<>();
 		List<Tuple> Top10 = new ArrayList<>();
 		for (int i = 0; i < MAXNODENUM; ++i) {
